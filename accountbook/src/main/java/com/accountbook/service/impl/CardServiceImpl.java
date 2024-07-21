@@ -19,14 +19,13 @@ public class CardServiceImpl implements CardService {
 	private final CardRepository repository;
 		
 	@Override
-	public Card selectOne(Integer seq) {
-		return repository.findById(seq).get();
+	public Card selectOne(Card card) {
+		return repository.findById(card.getCardSeq()).get();
 	}
 
 	@Override
-	public List<Card> selectList(Integer seq) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Card> selectList(Card card) {
+		return repository.findAll();
 	}
 
 	@Override
