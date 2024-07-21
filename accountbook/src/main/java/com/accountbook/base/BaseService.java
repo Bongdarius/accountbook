@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface BaseService<T> {
 	
-	public T selectOne(Integer seq);
+	public T selectOne(T entity);
 	
-	public List<T> selectList(Integer seq);
+	public List<T> selectList(T entity);
 	
 	public T insertOne(T entity);
 	
