@@ -30,8 +30,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<Member> selectList(Member entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 	@Override
