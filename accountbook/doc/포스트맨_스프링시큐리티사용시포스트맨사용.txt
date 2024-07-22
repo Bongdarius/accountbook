@@ -1,0 +1,8 @@
+postman
+	Authorization 클릭
+	Type에 Basic Auto 선택
+	
+	Username : user
+	Password : [생성된 비밀번호]
+	
+	입력 후 api 호출하면 정상적으로 api가 호출됨
