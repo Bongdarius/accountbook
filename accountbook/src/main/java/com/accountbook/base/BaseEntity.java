@@ -14,15 +14,15 @@ import lombok.ToString;
 @ToString
 public class BaseEntity {
 	
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private Integer regUserId;
 	
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private LocalDateTime regDt;
 	
 	@Column(nullable = true)
 	private Integer modUserId;
 	
 	@Column(nullable = true)
-	private LocalDateTime modDt;	
+	private LocalDateTime modDt;
 }
