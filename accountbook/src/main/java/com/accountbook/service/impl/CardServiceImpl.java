@@ -1,5 +1,6 @@
 package com.accountbook.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +11,12 @@ import com.accountbook.entity.Card;
 import com.accountbook.repository.CardRepository;
 import com.accountbook.service.CardService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CardServiceImpl implements CardService {
 
 	private final CardRepository repository;
@@ -89,6 +92,8 @@ public class CardServiceImpl implements CardService {
 		for(String cardNm : cardNmList) {
 			Card card = new Card();
 			card.setCardNm(cardNm);
+			card.setRegUserId(1);
+			card.setRegDt(LocalDateTime.now());
 			repository.save(card);
 			cardList.add(card);
 		}
