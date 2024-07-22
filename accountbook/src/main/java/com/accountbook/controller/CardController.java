@@ -24,9 +24,13 @@ public class CardController {
 	
 	@PostMapping(value = "/initDatas")
 	public ResponseEntity<List<Card>> initDatas() throws Exception {
-		return Optional.ofNullable(service.initDatas())
-				.map(list -> ResponseEntity.ok(list))
-				.orElse(ResponseEntity.noContent().build());
+		try {
+			return Optional.ofNullable(service.initDatas())
+					.map(list -> ResponseEntity.ok(list))
+					.orElse(ResponseEntity.noContent().build());
+		} catch(Exception e) {
+			return null;
+		}
 	}
 	
 	@GetMapping
