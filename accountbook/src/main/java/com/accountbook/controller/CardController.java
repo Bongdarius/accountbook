@@ -29,6 +29,7 @@ public class CardController {
 					.map(list -> ResponseEntity.ok(list))
 					.orElse(ResponseEntity.noContent().build());
 		} catch(Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
