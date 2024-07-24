@@ -79,8 +79,8 @@ public class MemberServiceImpl implements MemberService {
 		member.setMbId("admin");
 		member.setMbPassword(passwordEncoder.encode(password));
 		member.setMbNick("최고관리자");
-		member.setRegUserId(1);
-		member.setRegDt(LocalDateTime.now());
+//		member.setRegUserId(1);
+//		member.setRegDt(LocalDateTime.now());
 		memberList.add(repository.save(member));
 		
 		return memberList;
