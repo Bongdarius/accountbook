@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.accountbook.base.BaseEntity;
+import com.accountbook.dto.MemberDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,4 +46,12 @@ public class Member extends BaseEntity {
 
     @Column(name = "mb_nick", length = 50, nullable = false)
     private String mbNick;
+    
+    public MemberDto setDto() {
+    	MemberDto dto = new MemberDto();
+    	dto.setMbSeq(this.mbSeq);
+    	dto.setMbId(this.mbId);
+    	dto.setMbNick(this.mbNick);
+    	return dto;
+    }
 }

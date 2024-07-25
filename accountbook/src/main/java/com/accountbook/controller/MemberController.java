@@ -1,5 +1,6 @@
 package com.accountbook.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accountbook.dto.MemberDto;
 import com.accountbook.entity.Member;
 import com.accountbook.service.MemberService;
 
@@ -30,10 +32,21 @@ public class MemberController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Member>> selectList() {
-		ResponseEntity<List<Member>> returnMemberList = Optional.ofNullable(service.selectList(new Member()))
-				.map(member_ -> ResponseEntity.ok(member_))
-				.orElse(ResponseEntity.noContent().build());
+	public ResponseEntity<List<MemberDto>> selectList() throws Exception {
+		List<MemberDto> dto = new ArrayList<>(); 
+		List<Member> memberList = service.selectList(new Member());
+		
+		try {
+			for(Member member : memberList) {
+				dto.add(member.setDto());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(memberList.size());
+		}
+	
+		
+		ResponseEntity<List<MemberDto>> returnMemberList = ResponseEntity.ok(dto);
 		return returnMemberList;
 	}
 	

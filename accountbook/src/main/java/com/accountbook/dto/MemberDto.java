@@ -7,4 +7,9 @@ import lombok.Setter;
 @Setter
 public class MemberDto {
 
+    private Integer mbSeq;
+
+    private String mbId;
+
+    private String mbNick;
 }
