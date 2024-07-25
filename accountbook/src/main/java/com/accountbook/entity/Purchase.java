@@ -54,4 +54,7 @@ public class Purchase extends BaseEntity {
 
     @Column(name = "pc_datetime", nullable = false)
     private LocalDateTime pcDatetime; // 결제 일시
+    
+    
+    
 }
