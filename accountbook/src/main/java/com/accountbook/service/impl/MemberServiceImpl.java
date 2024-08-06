@@ -1,8 +1,8 @@
 package com.accountbook.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +12,7 @@ import com.accountbook.entity.Member;
 import com.accountbook.repository.MemberRepository;
 import com.accountbook.service.MemberService;
 
+import groovy.cli.Option;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,13 +31,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<Member> selectList(Member entity) {
-		return repository.findAll();
+		return repository.findByOrderByMbSeqAsc();
 	}
 
 	@Override
-	public Member insertOne(Member entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member insertOne(Member member) {
+		String password = member.getMbPassword() == null ? "1234" : member.getMbPassword();
+		String encryptedPassword = passwordEncoder.encode(password);
+		member.setMbPassword(encryptedPassword);
+		return repository.save(member);
 	}
 
 	@Override
@@ -46,9 +49,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member updateOne(Member entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member updateOne(Member member) {
+		Member baseMember = repository.findById(member.getMbSeq()).get();
+		baseMember.setMbId(member.getMbId());
+		baseMember.setMbNick(member.getMbNick());
+		return repository.save(baseMember);
 	}
 
 	@Override
@@ -59,8 +64,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void deleteOne(Member entity) {
-		// TODO Auto-generated method stub
-		
+		repository.deleteById(entity.getMbSeq());
 	}
 
 	@Override
@@ -79,8 +83,6 @@ public class MemberServiceImpl implements MemberService {
 		member.setMbId("admin");
 		member.setMbPassword(passwordEncoder.encode(password));
 		member.setMbNick("최고관리자");
-//		member.setRegUserId(1);
-//		member.setRegDt(LocalDateTime.now());
 		memberList.add(repository.save(member));
 		
 		return memberList;
@@ -103,4 +105,12 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	@Override
+	public Member resetPw(String mbId) throws Exception {
+		Member member = Optional.ofNullable(repository.findByMbId(mbId))
+							.orElseThrow(() -> new Exception("아이디를 잘못 입력하였습니다."));
+		
+		member.setMbPassword(passwordEncoder.encode("1234"));
+		return repository.save(member);
+	}
 }
