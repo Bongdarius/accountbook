@@ -13,4 +13,5 @@ import com.accountbook.entity.Card;
 public interface MemberCardRepository extends JpaRepository<MemberCard, Integer> {
 	
 	MemberCard findByMemberAndCard(Member member, Card card);
+	List<MemberCard> findByMember(Member member);
 }

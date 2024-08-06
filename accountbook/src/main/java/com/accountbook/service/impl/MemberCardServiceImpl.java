@@ -31,8 +31,7 @@ public class MemberCardServiceImpl implements MemberCardService {
 
 	@Override
 	public List<MemberCard> selectList(MemberCard entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findByMember(entity.getMember());
 	}
 
 	@Override

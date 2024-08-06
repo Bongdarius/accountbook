@@ -25,12 +25,12 @@ public class CardServiceImpl implements CardService {
 
 	@Override
 	public List<Card> selectList(Card card) {
-		return repository.findAll();
+		return repository.findByOrderByCardSeqAsc();
 	}
 
 	@Override
-	public Card insertOne(Card entity) {
-		return null;
+	public Card insertOne(Card card) {
+		return repository.save(card);
 	}
 
 	@Override
@@ -40,9 +40,8 @@ public class CardServiceImpl implements CardService {
 	}
 
 	@Override
-	public Card updateOne(Card entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Card updateOne(Card card) {
+		return repository.save(card);
 	}
 
 	@Override
@@ -52,9 +51,8 @@ public class CardServiceImpl implements CardService {
 	}
 
 	@Override
-	public void deleteOne(Card entity) {
-		// TODO Auto-generated method stub
-		
+	public void deleteOne(Card card) {
+		repository.deleteById(card.getCardSeq());
 	}
 
 	@Override

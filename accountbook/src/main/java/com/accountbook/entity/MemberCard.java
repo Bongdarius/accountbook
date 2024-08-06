@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.accountbook.dto.MemberCardDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,4 +46,15 @@ public class MemberCard {
     
     @OneToMany(mappedBy = "memberCard")
     private List<PurchaseCard> purchaseCardList;
+    
+    public MemberCardDto setDto() {
+    	MemberCardDto dto = new MemberCardDto();
+    	dto.setMcSeq(mcSeq);
+    	dto.setMbSeq(member.getMbSeq());
+    	dto.setMbId(member.getMbId());
+    	dto.setMbNick(member.getMbNick());
+    	dto.setCardSeq(card.getCardSeq());
+    	dto.setCardNm(card.getCardNm());
+    	return dto;
+    }
 }
