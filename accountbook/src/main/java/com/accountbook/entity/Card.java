@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.accountbook.base.BaseEntity;
+import com.accountbook.dto.CardDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,4 +37,11 @@ public class Card extends BaseEntity {
     
     @OneToMany(mappedBy = "card")
     private List<MemberCard> memberCardList;
+    
+    public CardDto setDto() {
+    	CardDto dto = new CardDto();
+    	dto.setCardSeq(cardSeq);
+    	dto.setCardNm(cardNm);
+    	return dto;
+    }
 }
