@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.accountbook.base.BaseEntity;
+import com.accountbook.dto.PurchaseMethodDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,4 +37,11 @@ public class PurchaseMethod extends BaseEntity {
     
     @Column(length = 20, nullable = false, unique = true)
     private String pcmNm;
+    
+    public PurchaseMethodDto setDto() {
+    	PurchaseMethodDto dto = new PurchaseMethodDto();
+    	dto.setPcmSeq(pcmSeq);
+    	dto.setPcmNm(pcmNm);
+    	return dto;
+    }
 }
