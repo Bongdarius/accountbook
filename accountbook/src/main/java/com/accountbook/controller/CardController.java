@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accountbook.dto.CardDto;
-import com.accountbook.dto.MemberDto;
+import com.accountbook.dto.ItemDto;
 import com.accountbook.entity.Card;
-import com.accountbook.entity.Member;
 import com.accountbook.service.CardService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,6 +48,11 @@ public class CardController {
 		
 		return ResponseEntity.ok(dtoList);
 	} 
+	
+	@GetMapping(value = "/byItems")
+	public ResponseEntity<List<ItemDto>> selectListByItems() throws Exception {
+		return ResponseEntity.ok(service.selectListByItems());
+	} 	
 	
 	@GetMapping(value = "/{seq}")
 	public ResponseEntity<Card> selectOne(@PathVariable Integer seq) throws Exception {

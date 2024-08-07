@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.accountbook.dto.ItemDto;
 import com.accountbook.entity.Card;
 import com.accountbook.repository.CardRepository;
 import com.accountbook.service.CardService;
@@ -94,6 +95,13 @@ public class CardServiceImpl implements CardService {
 		}
 		
 		return cardList;
+	}
+
+	@Override
+	public List<ItemDto> selectListByItems() throws Exception {
+		List<ItemDto> dtoList = new ArrayList<>();
+		repository.findByOrderByCardSeqAsc().forEach(each -> dtoList.add(each.setItemDto()));
+		return dtoList;
 	}
 
 }
