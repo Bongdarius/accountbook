@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import com.accountbook.base.BaseEntity;
 import com.accountbook.dto.CardDto;
+import com.accountbook.dto.ItemDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,6 +43,13 @@ public class Card extends BaseEntity {
     	CardDto dto = new CardDto();
     	dto.setCardSeq(cardSeq);
     	dto.setCardNm(cardNm);
+    	return dto;
+    }
+    
+    public ItemDto setItemDto() {
+    	ItemDto dto = new ItemDto();
+    	dto.setValue(cardSeq.toString());
+    	dto.setText(cardNm);
     	return dto;
     }
 }
