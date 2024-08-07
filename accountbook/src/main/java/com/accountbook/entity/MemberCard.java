@@ -1,5 +1,6 @@
 package com.accountbook.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -54,7 +55,26 @@ public class MemberCard {
     	dto.setMbId(member.getMbId());
     	dto.setMbNick(member.getMbNick());
     	dto.setCardSeq(card.getCardSeq());
+    	dto.setCardSeqStr(card.getCardSeq().toString());
     	dto.setCardNm(card.getCardNm());
     	return dto;
+    }
+    
+    public static List<MemberCardDto> setDto(List<MemberCard> memberCardList) {
+    	List<MemberCardDto> dtoList = new ArrayList<>();
+    	
+    	for(MemberCard memberCard : memberCardList) {
+    		MemberCardDto dto = new MemberCardDto();
+    		dto.setMcSeq(memberCard.getMcSeq());
+    		dto.setMbSeq(memberCard.getMember().getMbSeq());
+    		dto.setMbId(memberCard.getMember().getMbId());
+    		dto.setMbNick(memberCard.getMember().getMbNick());
+    		dto.setCardSeq(memberCard.getCard().getCardSeq());
+    		dto.setCardSeqStr(memberCard.getCard().getCardSeq().toString());
+    		dto.setCardNm(memberCard.getCard().getCardNm());
+    		dtoList.add(dto);
+    	}
+
+    	return dtoList;
     }
 }

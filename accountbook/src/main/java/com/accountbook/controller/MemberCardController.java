@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accountbook.dto.CardDto;
 import com.accountbook.dto.MemberCardDto;
 import com.accountbook.entity.Card;
 import com.accountbook.entity.Member;
@@ -65,5 +69,98 @@ public class MemberCardController {
 		return Optional.ofNullable(dtoList)
 				.map(dtolist_ -> ResponseEntity.ok(dtolist_))
 				.orElse(ResponseEntity.noContent().build());
+	}
+	
+	@PostMapping
+	public ResponseEntity<MemberCardDto> insertOne(@RequestBody MemberCardDto paramDto) throws Exception {
+		paramDto.setMbSeq(1);
+		try {
+			MemberCardDto returnCard = service.insertOne(paramDto.setEntity()).setDto();
+			ResponseEntity<MemberCardDto> response = Optional.ofNullable(returnCard)
+													.map(member_ -> ResponseEntity.ok(member_))
+													.orElse(ResponseEntity.noContent().build());
+		return response;
+		} catch(Exception e) {
+			if(e.getMessage().contains("duplicate key value violates unique constraint")) {
+				throw new Exception("중복");
+			} else {
+				throw new Exception("저장중 오류 발생");
+			}
+		}
+	}	
+	
+	@PostMapping(value = "/list")
+	public ResponseEntity<List<MemberCardDto>> insertList(@RequestBody List<MemberCardDto> paramDtoList) throws Exception {
+		try {
+			List<MemberCard> memberCardList = service.insertList(MemberCardDto.setEntity(paramDtoList, 1));
+			List<MemberCardDto> dtoList = MemberCard.setDto(memberCardList);
+			
+			ResponseEntity<List<MemberCardDto>> response = Optional.ofNullable(dtoList)
+													.map(memberCardList_ -> ResponseEntity.ok(memberCardList_))
+													.orElse(ResponseEntity.noContent().build());
+		return response;
+		} catch(Exception e) {
+			if(e.getMessage().contains("duplicate key value violates unique constraint")) {
+				throw new Exception("중복");
+			} else {
+				throw new Exception("저장중 오류 발생");
+			}
+		}
+	}		
+	
+	@PutMapping
+	public ResponseEntity<MemberCardDto> updateOne(@RequestBody MemberCardDto paramDto) throws Exception {
+		try {
+			MemberCardDto dto = service.updateOne(paramDto.setEntity()).setDto();
+			ResponseEntity<MemberCardDto> response = Optional.ofNullable(dto)
+													.map(entity_ -> ResponseEntity.ok(entity_))
+													.orElse(ResponseEntity.noContent().build());
+		return response;
+		} catch(Exception e) {
+			if(e.getMessage().contains("duplicate key value violates unique constraint")) {
+				throw new Exception("중복");
+			} else {
+				throw new Exception("수정중 오류 발생");
+			}
+		}
+	}
+	
+	@PutMapping(value = "/list")
+	public ResponseEntity<List<MemberCardDto>> updateList(@RequestBody List<MemberCardDto> paramDtoList) throws Exception {
+		try {
+			List<MemberCard> memberCardList = service.updateList(MemberCardDto.setEntity(paramDtoList));
+			List<MemberCardDto> dtoList = MemberCard.setDto(memberCardList);
+			
+			ResponseEntity<List<MemberCardDto>> response = Optional.ofNullable(dtoList)
+													.map(memberCardList_ -> ResponseEntity.ok(memberCardList_))
+													.orElse(ResponseEntity.noContent().build());
+		return response;
+		} catch(Exception e) {
+			if(e.getMessage().contains("duplicate key value violates unique constraint")) {
+				throw new Exception("중복");
+			} else {
+				throw new Exception("수정중 오류 발생");
+			}
+		}
+	}
+	
+	@DeleteMapping(value = "/{mcSeq}")
+	public void deleteOne(@PathVariable("mcSeq") Integer mcSeq) throws Exception {
+		MemberCard entity = new MemberCard();
+		entity.setMcSeq(mcSeq);
+		service.deleteOne(entity);
+	}
+	
+	@PutMapping(value = "/deletelist")
+	public void deleteList(@RequestBody List<MemberCardDto> paramDtoList) throws Exception {
+		try {
+			service.deleteList(MemberCardDto.setEntity(paramDtoList));
+		} catch(Exception e) {
+			if(e.getMessage().contains("duplicate key value violates unique constraint")) {
+				throw new Exception("중복");
+			} else {
+				throw new Exception("삭제중 오류 발생");
+			}
+		}
 	}
 }

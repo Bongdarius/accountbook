@@ -31,43 +31,45 @@ public class MemberCardServiceImpl implements MemberCardService {
 
 	@Override
 	public List<MemberCard> selectList(MemberCard entity) {
-		return repository.findByMember(entity.getMember());
+		return repository.findByMemberOrderByMcSeqAsc(entity.getMember());
 	}
 
 	@Override
 	public MemberCard insertOne(MemberCard entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.save(entity);
 	}
 
 	@Override
 	public List<MemberCard> insertList(List<MemberCard> entityList) {
-		// TODO Auto-generated method stub
-		return null;
+		List<MemberCard> memberCardList = new ArrayList<>();
+		
+		entityList.forEach(entity -> memberCardList.add(repository.save(entity)));
+		
+		return memberCardList;
 	}
 
 	@Override
 	public MemberCard updateOne(MemberCard entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.save(entity);
 	}
 
 	@Override
 	public List<MemberCard> updateList(List<MemberCard> entityList) {
-		// TODO Auto-generated method stub
-		return null;
+		List<MemberCard> memberCardList = new ArrayList<>();
+		
+		entityList.forEach(entity -> memberCardList.add(repository.save(entity)));
+		
+		return memberCardList;
 	}
 
 	@Override
 	public void deleteOne(MemberCard entity) {
-		// TODO Auto-generated method stub
-		
+		repository.deleteById(entity.getMcSeq());
 	}
 
 	@Override
 	public void deleteList(List<MemberCard> entityList) {
-		// TODO Auto-generated method stub
-		
+		entityList.forEach(entity -> repository.deleteById(entity.getMcSeq()));
 	}
 
 	@Override
