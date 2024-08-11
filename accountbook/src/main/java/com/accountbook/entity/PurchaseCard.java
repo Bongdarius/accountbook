@@ -30,9 +30,9 @@ public class PurchaseCard extends BaseEntity {
     @ColumnDefault("nextval('purchase_card_seq'::regclass)")
     private Integer pccSeq;
     
-    @OneToOne
-    @JoinColumn(name = "pc_seq", nullable = false)
-    private Purchase purchase;
+//    @OneToOne
+//    @JoinColumn(name = "pc_seq", nullable = false)
+//    private Purchase purchase;
     
     @ManyToOne
     @JoinColumn(name = "mc_seq", nullable = false)

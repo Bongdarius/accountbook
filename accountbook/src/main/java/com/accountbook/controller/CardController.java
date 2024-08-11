@@ -54,17 +54,6 @@ public class CardController {
 		return ResponseEntity.ok(service.selectListByItems());
 	} 	
 	
-	@GetMapping(value = "/{seq}")
-	public ResponseEntity<Card> selectOne(@PathVariable Integer seq) throws Exception {
-
-		Card card = new Card();
-		card.setCardSeq(seq);
-		
-		return Optional.ofNullable(service.selectOne(card))
-				.map(card_ -> ResponseEntity.ok(card_))
-				.orElse(ResponseEntity.noContent().build());
-	} 
-	
 	@PostMapping
 	public ResponseEntity<CardDto> insertOne(@RequestBody Card card) throws Exception {
 		try {

@@ -104,4 +104,10 @@ public class CardServiceImpl implements CardService {
 		return dtoList;
 	}
 
+	@Override
+	public List<Card> saveList(List<Card> entityList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

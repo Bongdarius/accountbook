@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.accountbook.base.BaseEntity;
+import com.accountbook.dto.PurchaseDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,7 +47,7 @@ public class Purchase extends BaseEntity {
     private PurchaseMethod purchaseMethod; // 결제 수단 일련번호
 
     @OneToOne
-    @JoinColumn(name = "pc_seq", nullable = false)
+    @JoinColumn(name = "pcc_seq")
     private PurchaseCard purchaseCard;
     
     @Column(name = "pc_amt", nullable = false)
@@ -55,6 +56,27 @@ public class Purchase extends BaseEntity {
     @Column(name = "pc_datetime", nullable = false)
     private LocalDateTime pcDatetime; // 결제 일시
     
+    @Column(name = "pc_remark", nullable = true)
+    private String pcRemark;
     
-    
+    public PurchaseDto setDto() {
+    	PurchaseDto dto = new PurchaseDto();
+    	dto.setPcSeq(pcSeq);
+    	
+    	dto.setMbSeq(member.getMbSeq());
+    	
+    	dto.setPcmSeq(purchaseMethod.getPcmSeq());
+    	dto.setPcmNm(purchaseMethod.getPcmNm());
+    	
+    	if(purchaseCard != null) {
+    		dto.setPccSeq(purchaseCard.getPccSeq());
+        	dto.setMcSeq(purchaseCard.getMemberCard().getMcSeq());
+        	dto.setMcNick(purchaseCard.getMemberCard().getMcNick());
+    	}
+    	
+    	dto.setPcAmt(pcAmt);
+    	dto.setPcDatetime(pcDatetime);
+    	dto.setPcRemark(pcRemark);
+    	return dto;
+    }
 }

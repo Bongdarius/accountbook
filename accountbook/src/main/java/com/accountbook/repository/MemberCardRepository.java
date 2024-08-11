@@ -14,4 +14,5 @@ public interface MemberCardRepository extends JpaRepository<MemberCard, Integer>
 	
 	MemberCard findByMemberAndCard(Member member, Card card);
 	List<MemberCard> findByMemberOrderByMcSeqAsc(Member member);
+	List<MemberCard> findByOrderByMcSeqAsc();
 }

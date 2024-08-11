@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.accountbook.dto.ItemDto;
 import com.accountbook.entity.PurchaseMethod;
 import com.accountbook.repository.CardRepository;
 import com.accountbook.repository.PurchaseMethodRepository;
@@ -82,6 +83,19 @@ public class PurchaseMethodServiceImpl implements PurchaseMethodService {
 		}
 		
 		return purchaseMethodList;
+	}
+
+	@Override
+	public List<PurchaseMethod> saveList(List<PurchaseMethod> entityList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ItemDto> selectListByItems() {
+		List<ItemDto> dtoList = new ArrayList<>();
+		repository.findByOrderByPcmSeqAsc().forEach(each -> dtoList.add(each.setItemDto()));
+		return dtoList;
 	}
 
 }

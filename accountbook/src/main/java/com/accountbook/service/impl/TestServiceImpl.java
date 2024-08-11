@@ -74,4 +74,10 @@ public class TestServiceImpl implements TestService {
 		}
 		return testList;
 	}
+
+	@Override
+	public List<Test> saveList(List<Test> entityList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

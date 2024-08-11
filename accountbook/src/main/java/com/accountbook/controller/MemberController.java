@@ -7,20 +7,20 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accountbook.dto.MemberDto;
 import com.accountbook.entity.Member;
 import com.accountbook.service.MemberService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -57,12 +57,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("/login")
-	public ResponseEntity<MemberDto> login(@RequestParam String mbId, @RequestParam String mbPassword) throws Exception {
+	public ResponseEntity<MemberDto> login(@RequestParam String mbId, @RequestParam String mbPassword, HttpSession session) throws Exception {
 		Member member = new Member();
 		member.setMbId(mbId);
 		member.setMbPassword(mbPassword);
-		Member loginMember = service.login(member);
-		ResponseEntity<MemberDto> returnMember = Optional.ofNullable(loginMember.setDto())
+		MemberDto dto = service.login(member).setDto();
+		
+		session.setAttribute("loginMember", dto);
+		
+		ResponseEntity<MemberDto> returnMember = Optional.ofNullable(dto)
 												.map(member_ -> ResponseEntity.ok(member_))
 												.orElse(ResponseEntity.noContent().build());
 		return returnMember;
@@ -118,5 +121,17 @@ public class MemberController {
 		Member member = new Member();
 		member.setMbSeq(mbSeq);
 		service.deleteOne(member);
+	}
+	
+	@GetMapping(value = "/isLogin")
+	public ResponseEntity<MemberDto> isLogin(HttpSession session) {
+		MemberDto dto = (MemberDto) session.getAttribute("loginMember");
+		if(dto == null) return null; 
+		return ResponseEntity.ok(dto);
+	}
+	
+	@GetMapping(value = "/logout")
+	public void logout(HttpSession session) {
+		session.removeAttribute("loginMember");
 	}
 }

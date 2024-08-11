@@ -29,6 +29,8 @@ public class MemberCardDto {
 
     private String cardNm;
     
+    private String mcNick;
+    
     public MemberCard setEntity() {
     	MemberCard entity = new MemberCard();
     	Member member = new Member();
@@ -39,6 +41,7 @@ public class MemberCardDto {
     	entity.setMcSeq(mcSeq);
     	entity.setMember(member);
     	entity.setCard(card);
+    	entity.setMcNick(mcNick);
     	
     	return entity;
     }
@@ -51,32 +54,17 @@ public class MemberCardDto {
         	Member member = new Member();
         	Card card = new Card();
         	
-        	member.setMbSeq(mbSeq);
+        	if(dto.getMbSeq() != null) {
+        		member.setMbSeq(dto.getMbSeq());
+        	} else {
+        		member.setMbSeq(mbSeq);
+        	}
         	card.setCardSeq(Integer.parseInt(dto.getCardSeqStr()));
 
         	entity.setMcSeq(dto.getMcSeq());
         	entity.setMember(member);
         	entity.setCard(card);
-        	entityList.add(entity);
-    	}
-    	
-    	return entityList;
-    }
-    
-    public static List<MemberCard> setEntity(List<MemberCardDto> dtoList) {
-    	List<MemberCard> entityList = new ArrayList<>();
-    	
-    	for(MemberCardDto dto : dtoList) {
-        	MemberCard entity = new MemberCard();
-        	Member member = new Member();
-        	Card card = new Card();
-        	
-        	member.setMbSeq(dto.getMbSeq());
-        	card.setCardSeq(Integer.parseInt(dto.getCardSeqStr()));
-
-        	entity.setMcSeq(dto.getMcSeq());
-        	entity.setMember(member);
-        	entity.setCard(card);
+        	entity.setMcNick(dto.getMcNick());
         	entityList.add(entity);
     	}
     	

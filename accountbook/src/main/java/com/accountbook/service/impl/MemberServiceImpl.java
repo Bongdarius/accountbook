@@ -113,4 +113,10 @@ public class MemberServiceImpl implements MemberService {
 		member.setMbPassword(passwordEncoder.encode("1234"));
 		return repository.save(member);
 	}
+
+	@Override
+	public List<Member> saveList(List<Member> entityList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

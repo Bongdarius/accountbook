@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accountbook.dto.ItemDto;
 import com.accountbook.dto.PurchaseMethodDto;
 import com.accountbook.entity.PurchaseMethod;
 import com.accountbook.service.PurchaseMethodService;
@@ -87,4 +88,9 @@ public class PurchaseMethodController {
 		entity.setPcmSeq(pcmSeq);
 		service.deleteOne(entity);
 	}
+	
+	@GetMapping(value = "/byItems")
+	public ResponseEntity<List<ItemDto>> selectListByItems() throws Exception {
+		return ResponseEntity.ok(service.selectListByItems());
+	} 
 }

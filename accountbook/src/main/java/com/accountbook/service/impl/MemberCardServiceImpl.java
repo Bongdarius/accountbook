@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.accountbook.dto.ItemDto;
 import com.accountbook.entity.Card;
 import com.accountbook.entity.Member;
 import com.accountbook.entity.MemberCard;
@@ -93,7 +94,20 @@ public class MemberCardServiceImpl implements MemberCardService {
 	public MemberCard selectOne(Member member, Card card) {
 		return repository.findByMemberAndCard(member, card);
 	}
-		
-	
 
+	@Override
+	public List<MemberCard> saveList(List<MemberCard> entityList) {
+		List<MemberCard> memberCardList = new ArrayList<>();
+		
+		entityList.forEach(entity -> memberCardList.add(repository.save(entity)));
+		
+		return memberCardList;
+	}
+
+	@Override
+	public List<ItemDto> selectListByItems(Member member) {
+		List<ItemDto> dtoList = new ArrayList<>();
+		repository.findByMemberOrderByMcSeqAsc(member).forEach(each -> dtoList.add(each.setItemDto()));
+		return dtoList;
+	}
 }

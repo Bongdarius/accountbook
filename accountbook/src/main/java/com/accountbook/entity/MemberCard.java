@@ -7,8 +7,10 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.accountbook.dto.ItemDto;
 import com.accountbook.dto.MemberCardDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,6 +50,9 @@ public class MemberCard {
     @OneToMany(mappedBy = "memberCard")
     private List<PurchaseCard> purchaseCardList;
     
+    @Column(name = "mc_nick", length = 50, nullable = false)
+    private String mcNick;
+    
     public MemberCardDto setDto() {
     	MemberCardDto dto = new MemberCardDto();
     	dto.setMcSeq(mcSeq);
@@ -57,6 +62,7 @@ public class MemberCard {
     	dto.setCardSeq(card.getCardSeq());
     	dto.setCardSeqStr(card.getCardSeq().toString());
     	dto.setCardNm(card.getCardNm());
+    	dto.setMcNick(mcNick);
     	return dto;
     }
     
@@ -72,9 +78,17 @@ public class MemberCard {
     		dto.setCardSeq(memberCard.getCard().getCardSeq());
     		dto.setCardSeqStr(memberCard.getCard().getCardSeq().toString());
     		dto.setCardNm(memberCard.getCard().getCardNm());
+    		dto.setMcNick(memberCard.getMcNick());
     		dtoList.add(dto);
     	}
 
     	return dtoList;
+    }
+    
+    public ItemDto setItemDto() {
+    	ItemDto dto = new ItemDto();
+    	dto.setValue(mcSeq.toString());
+    	dto.setText(mcNick);
+    	return dto;
     }
 }

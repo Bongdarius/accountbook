@@ -16,6 +16,8 @@ public interface BaseService<T> {
 	
 	public List<T> updateList(List<T> entityList);
 	
+	public List<T> saveList(List<T> entityList);
+	
 	public void deleteOne(T entity);
 	
 	public void deleteList(List<T> entityList);
