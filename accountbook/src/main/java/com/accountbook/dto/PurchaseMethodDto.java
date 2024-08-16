@@ -9,4 +9,6 @@ public class PurchaseMethodDto {
     private Integer pcmSeq;
 
     private String pcmNm;
+   
+    private Integer pcmSortNo;    
 }

@@ -2,6 +2,7 @@ package com.accountbook.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.accountbook.entity.Member;
 import com.accountbook.entity.MemberCard;
@@ -34,7 +35,7 @@ public class PurchaseDto {
 	
 	private BigDecimal pcAmt;
 
-	private LocalDateTime pcDatetime;
+	private String pcDatetime;
 	
 	private String pcRemark;
 	
@@ -61,9 +62,13 @@ public class PurchaseDto {
 			purchaseCard.setMemberCard(memberCard);
 			entity.setPurchaseCard(purchaseCard);
 		}
-		
+
 		entity.setPcAmt(pcAmt);
-		entity.setPcDatetime(pcDatetime);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(pcDatetime, formatter);
+		entity.setPcDatetime(dateTime);
+		
 		entity.setPcRemark(pcRemark);
 		
 		return entity;

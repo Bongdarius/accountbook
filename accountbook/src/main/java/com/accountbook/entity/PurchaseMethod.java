@@ -39,10 +39,14 @@ public class PurchaseMethod extends BaseEntity {
     @Column(length = 20, nullable = false, unique = true)
     private String pcmNm;
     
+    @Column(name = "pcm_sort_no")
+    private Integer pcmSortNo;
+    
     public PurchaseMethodDto setDto() {
     	PurchaseMethodDto dto = new PurchaseMethodDto();
     	dto.setPcmSeq(pcmSeq);
     	dto.setPcmNm(pcmNm);
+    	dto.setPcmSortNo(pcmSortNo);
     	return dto;
     }
     

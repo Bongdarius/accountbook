@@ -28,7 +28,7 @@ public class PurchaseMethodServiceImpl implements PurchaseMethodService {
 
 	@Override
 	public List<PurchaseMethod> selectList(PurchaseMethod PurchaseMethod) {
-		return repository.findByOrderByPcmSeqAsc();
+		return repository.findByOrderByPcmSortNoAsc();
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class PurchaseMethodServiceImpl implements PurchaseMethodService {
 	@Override
 	public List<ItemDto> selectListByItems() {
 		List<ItemDto> dtoList = new ArrayList<>();
-		repository.findByOrderByPcmSeqAsc().forEach(each -> dtoList.add(each.setItemDto()));
+		repository.findByOrderByPcmSortNoAsc().forEach(each -> dtoList.add(each.setItemDto()));
 		return dtoList;
 	}
 

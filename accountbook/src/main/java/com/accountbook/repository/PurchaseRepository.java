@@ -8,5 +8,5 @@ import com.accountbook.entity.Member;
 import com.accountbook.entity.Purchase;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
-	List<Purchase> findByMemberOrderByPcSeqAsc(Member member);
+	List<Purchase> findByMemberOrderByPcDatetimeDesc(Member member);
 }

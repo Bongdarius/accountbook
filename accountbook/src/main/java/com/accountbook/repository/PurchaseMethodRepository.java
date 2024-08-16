@@ -8,5 +8,5 @@ import com.accountbook.entity.Card;
 import com.accountbook.entity.PurchaseMethod;
 
 public interface PurchaseMethodRepository extends JpaRepository<PurchaseMethod, Integer> {
-	List<PurchaseMethod> findByOrderByPcmSeqAsc();
+	List<PurchaseMethod> findByOrderByPcmSortNoAsc();
 }

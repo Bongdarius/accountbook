@@ -2,6 +2,7 @@ package com.accountbook.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
@@ -74,8 +75,15 @@ public class Purchase extends BaseEntity {
         	dto.setMcNick(purchaseCard.getMemberCard().getMcNick());
     	}
     	
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // LocalDateTime을 문자열로 변환한다.
+        String formattedDateTime = pcDatetime.format(formatter);
+        
     	dto.setPcAmt(pcAmt);
-    	dto.setPcDatetime(pcDatetime);
+    	dto.setPcDatetime(formattedDateTime);
+    	
+
+    	
     	dto.setPcRemark(pcRemark);
     	return dto;
     }

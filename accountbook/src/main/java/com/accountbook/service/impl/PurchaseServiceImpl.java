@@ -29,7 +29,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public List<Purchase> selectList(Purchase entity) {
-		return repository.findByMemberOrderByPcSeqAsc(entity.getMember());
+		return repository.findByMemberOrderByPcDatetimeDesc(entity.getMember());
 	}
 
 	@Override
