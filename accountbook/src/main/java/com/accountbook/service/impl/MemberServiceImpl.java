@@ -12,7 +12,6 @@ import com.accountbook.entity.Member;
 import com.accountbook.repository.MemberRepository;
 import com.accountbook.service.MemberService;
 
-import groovy.cli.Option;
 import lombok.RequiredArgsConstructor;
 
 @Service

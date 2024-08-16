@@ -10,4 +10,5 @@ public class CardDto {
 
     private String cardNm;
 
+    private Integer cardSortNo;
 }

@@ -39,10 +39,14 @@ public class Card extends BaseEntity {
     @OneToMany(mappedBy = "card")
     private List<MemberCard> memberCardList;
     
+    @Column(name = "card_sort_no")
+    private Integer cardSortNo;
+    
     public CardDto setDto() {
     	CardDto dto = new CardDto();
     	dto.setCardSeq(cardSeq);
     	dto.setCardNm(cardNm);
+    	dto.setCardSortNo(cardSortNo);
     	return dto;
     }
     
