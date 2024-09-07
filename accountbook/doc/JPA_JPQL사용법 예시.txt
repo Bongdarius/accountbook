@@ -1,0 +1,8 @@
+@Query("SELECT new com.accountbook.dto.PurchaseMonthDto(EXTRACT(MONTH FROM p.pcDatetime) as pc_month, SUM(p.pcAmt) as pc_sum) " +
+            "FROM Purchase p " +
+            "WHERE p.member.mbSeq = :mbSeq " +
+            "GROUP BY EXTRACT(MONTH FROM p.pcDatetime)" +
+            "ORDER BY pc_month ASC")
+ List<PurchaseMonthDto> findMonthlyPurchaseSummary(@Param("mbSeq") Integer mbSeq);
+ 
+ 이런 방식으로 사용하면 된다...
