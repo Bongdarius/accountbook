@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.accountbook.dto.MemberDto;
 import com.accountbook.dto.PurchaseDto;
+import com.accountbook.dto.PurchaseMonthDto;
 import com.accountbook.entity.Member;
 import com.accountbook.entity.Purchase;
 import com.accountbook.service.PurchaseService;
@@ -29,7 +31,7 @@ public class PurchaseController {
 	private final PurchaseService service;
 	
 	@GetMapping
-	public ResponseEntity<List<PurchaseDto>> selectList(HttpSession session) throws Exception {
+	public ResponseEntity<List<PurchaseDto>> selectList(HttpSession session, @Param(value = "month") Integer month) throws Exception {
 		MemberDto memberDto = (MemberDto)session.getAttribute("loginMember");
 		
 		Purchase purchase = new Purchase();
@@ -38,7 +40,12 @@ public class PurchaseController {
 		purchase.setMember(member);
 		
 		List<PurchaseDto> dtoList = new ArrayList<>();
-		service.selectList(purchase).forEach(each -> dtoList.add(each.setDto()));
+		
+		if(month == null) {
+			service.selectList(purchase).forEach(each -> dtoList.add(each.setDto()));
+		} else {
+			service.selectListByMonth(purchase, month).forEach(each -> dtoList.add(each.setDto()));
+		}
 		
 		return Optional.ofNullable(dtoList)
 				.map(dtolist_ -> ResponseEntity.ok(dtolist_))
@@ -84,5 +91,16 @@ public class PurchaseController {
 				throw new Exception("삭제중 오류 발생");
 			}
 		}
+	}
+	
+	@GetMapping(value = "/month")
+	public ResponseEntity<List<PurchaseMonthDto>> selectPurchaseMonth(@Param(value = "mbSeq") Integer mbSeq) throws Exception {
+		List<PurchaseMonthDto> purchaseMonthList = service.selectPurchaseMonth(mbSeq);
+		
+		ResponseEntity<List<PurchaseMonthDto>> response = Optional.ofNullable(purchaseMonthList)
+															.map(purchaseMonthList_ -> ResponseEntity.ok(purchaseMonthList_))
+															.orElse(ResponseEntity.noContent().build());
+		
+		return response;
 	}
 }

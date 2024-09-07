@@ -1,10 +1,12 @@
 package com.accountbook.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.accountbook.dto.PurchaseMonthDto;
 import com.accountbook.entity.MemberCard;
 import com.accountbook.entity.Purchase;
 import com.accountbook.entity.PurchaseCard;
@@ -30,6 +32,14 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public List<Purchase> selectList(Purchase entity) {
 		return repository.findByMemberOrderByPcDatetimeDesc(entity.getMember());
+	}
+
+	@Override
+	public List<Purchase> selectListByMonth(Purchase purchase, Integer month) {
+		LocalDateTime startDate = LocalDateTime.of(2024, month, 1, 0, 0);
+		LocalDateTime endDate = LocalDateTime.of(2024, month + 1, 1, 0, 0);
+		
+		return repository.findByMemberAndPcDatetimeBetweenOrderByPcDatetimeDesc(purchase.getMember(), startDate, endDate);
 	}
 
 	@Override
@@ -85,5 +95,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public void deleteList(List<Purchase> entityList) {
 		entityList.forEach(each -> repository.deleteById(each.getPcSeq()));
 	}
-	
+
+	@Override
+	public List<PurchaseMonthDto> selectPurchaseMonth(Integer mbSeq) throws Exception {
+		return repository.findMonthlyPurchaseSummary(mbSeq);
+	}
 }
