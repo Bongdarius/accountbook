@@ -58,10 +58,10 @@ public class CardController {
 	public ResponseEntity<CardDto> insertOne(@RequestBody Card card) throws Exception {
 		try {
 			Card returnCard = service.insertOne(card);
-		ResponseEntity<CardDto> returnCardDto = Optional.ofNullable(returnCard.setDto())
-												.map(member_ -> ResponseEntity.ok(member_))
-												.orElse(ResponseEntity.noContent().build());
-		return returnCardDto;
+			ResponseEntity<CardDto> returnCardDto = Optional.ofNullable(returnCard.setDto())
+													.map(member_ -> ResponseEntity.ok(member_))
+													.orElse(ResponseEntity.noContent().build());
+			return returnCardDto;
 		} catch(Exception e) {
 			if(e.getMessage().contains("duplicate key value violates unique constraint")) {
 				throw new Exception("아이디 중복");
@@ -75,10 +75,10 @@ public class CardController {
 	public ResponseEntity<CardDto> updateOne(@RequestBody Card card) throws Exception {
 		try {
 			Card returnEntity = service.updateOne(card);
-		ResponseEntity<CardDto> returnDto = Optional.ofNullable(returnEntity.setDto())
-												.map(card_ -> ResponseEntity.ok(card_))
-												.orElse(ResponseEntity.noContent().build());
-		return returnDto;
+			ResponseEntity<CardDto> returnDto = Optional.ofNullable(returnEntity.setDto())
+													.map(card_ -> ResponseEntity.ok(card_))
+													.orElse(ResponseEntity.noContent().build());
+			return returnDto;
 		} catch(Exception e) {
 			if(e.getMessage().contains("duplicate key value violates unique constraint")) {
 				throw new Exception("카드명 중복");
